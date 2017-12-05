@@ -1,0 +1,22 @@
+{
+    "name": "tianrang/pay-haoshou",
+    "description": "a pay SDK for composer.【集成了博赢环深的好收支付，在原官方的SDK的基础封装而成。官网：http://developer.boingpay.com/download_index.html】。",
+    "keywords": ["php", "boingpay", "haoshou", "tianrang", "pay"],
+    "type": "library",
+    "license": "MIT",
+    "homepage": "http://ibok.cc",
+    "authors": [
+        {
+            "name": "shilei_zhang",
+            "email": "shilei_zhang@163.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    }
+}
