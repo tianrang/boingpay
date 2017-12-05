@@ -355,6 +355,7 @@ class BoingPay {
 	}
 
 	public function rsaDecrypt($data) {
+
 		//读取私钥文件
 		$priKey = file_get_contents(self::$RSAPrivateKeyFilePath);
 		//转换为openssl格式密钥

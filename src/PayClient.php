@@ -2,12 +2,12 @@
 
 namespace Tianrang\Boingpay;
 
-use BoingPay;
+use Tianrang\Boingpay\BoingPay;
 
 /**
 *  好收支付
 */
-class PayClient extends AnotherClass
+class PayClient
 {
 
 	private $app_id;
@@ -40,18 +40,22 @@ class PayClient extends AnotherClass
 		$config = config('boingpay');
 
 		$this->app_id       = $config['app_id'];
+		$this->api_version  = $config['api_version'];
+		$this->server_url   = $config['server_url'];
+		
 		$this->mch_app_id   = $config['mch_app_id'];
 		$this->front_url    = $config['front_url'];
 		$this->back_url     = $config['back_url'];
-		$this->server_url   = $config['server_url'];
-		$this->api_version  = $config['api_version'];
 
 		$this->rsa_path     = $config['rsa_path'];
 		$this->rsa_pub_path = $config['rsa_pub_path'];
 		$this->rsa_pwd      = $config['rsa_pwd'];
+
 		$this->dsa_path     = $config['dsa_path'];
 		$this->dsa_pub_path = $config['dsa_pub_path'];
 		$this->dsa_pwd      = $config['dsa_pwd'];
+
+		$this->__init();
 
 	}
 
@@ -59,7 +63,7 @@ class PayClient extends AnotherClass
 	{
 		BoingPay::setAppId($this->app_id);
 
-		BoingPay::setServerUrl($this->server_url);
+		// BoingPay::setServerUrl($this->server_url);
 
 		BoingPay::setApiVersion($this->api_version);
 
@@ -68,16 +72,27 @@ class PayClient extends AnotherClass
 
 		## RSA
 		BoingPay::setRSAKey($this->rsa_pub_path, $this->rsa_pub_path, $this->rsa_pwd);
+	}
 
-		$this->payServ = BoingPay::getService();
+	public function getServ()
+	{
+		return BoingPay::getService();
 	}
 
 	/**
 	 * APP支付，返回pay_token
 	 */
 	public function requestPay(array $params)
-	{
-		$result = $this->payServ->requestPay($params);
+	{	
+		$base   = [
+			'mch_app_id' => $this->mch_app_id,
+			'front_url'  => $this->front_url,
+			'back_url'   => $this->back_url,
+		];
+
+		$params = array_merge($params, $base);
+
+		$result = $this->getServ()->requestPay($params);
 
 		return $result;
 	}
